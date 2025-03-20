@@ -66,7 +66,5 @@ public:
 // Testing
 int main() {
     Solution sol;
-    // vector<int> nums = {0, 1, 0, 3, 12};
-    // sol.twoSum(nums, 13);
     return 0;
 }
