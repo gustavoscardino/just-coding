@@ -4,24 +4,30 @@
 using std::vector;
 
 class Solution {
-    public:
+public:
     int removeDuplicates(vector<int>& nums) {
-        int k = 2;
-        if (nums.size() <= 2) return nums.size();
-        for (int i = 2; i < nums.size(); i++) {
-            if (nums[i] != nums[k - 2]) { 
-                nums[k] = nums[i];
-                k++;
+        if(nums.size() <= 1) return nums.size();
+        int p1 = 0;
+        int p2 = 0;
+        while(p2 < nums.size()){
+            if (nums[p2] != nums[p1]){
+                nums[p1 + 1] = nums [p2];
+                p1++;
             }
+            else p2++;
         }
-        return k;
+        return p1 + 1;
     }
 };
 
 int main() {
     Solution sol;
-    vector<int> nums = {1,1,1,2,2,2,2,4,5,6};
+    vector<int> nums = {0,0,1,1,1,2,2,3,3,4};
     int k = sol.removeDuplicates(nums);
     printf("%d\n", k);
+    // print nums   
+    for (int i = 0; i < k; i++) {
+        std::cout << nums[i] << " ";
+    }
     std::cout << "End";
 }
