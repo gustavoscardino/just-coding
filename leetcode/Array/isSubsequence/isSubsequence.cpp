@@ -2,21 +2,28 @@
 #include <vector>
 #include <algorithm>
 #include <string>
+#include <climits>
 
 using namespace std;
 
 class Solution {
 public:
-    bool isSubsequence(string s, string t) {
-        int pnt1 = 0;
-        int pnt2 = 0;
-        while (pnt2 < t.size() && pnt1 < s.size()){
-            if (s[pnt1] == t[pnt2]){
-                pnt1++;
+    int lengthOfLongestSubstring(string s) {
+        unordered_set<char> seen;
+        int left = 0, right = 0, maxLen = 0;
+
+        while (right < s.length()) {
+            if (seen.find(s[right]) == seen.end()) {
+                seen.insert(s[right]);
+                maxLen = max(maxLen, right - left + 1);
+                right++;
+            } else {
+                seen.erase(s[left]);
+                left++;
             }
-            pnt2++;
         }
-        return pnt1 >= s.size();
+
+        return maxLen;
     }
 };
 
