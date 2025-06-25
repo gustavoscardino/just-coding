@@ -1,7 +1,7 @@
 #include <algorithm>  
 #include <queue>
 #include <iostream>
-#include <stack>
+#include <queue>
 using namespace std;
 
 /**
@@ -29,25 +29,28 @@ struct TreeNode {
  */
 class Solution {
 public:
-    vector<vector<int>> levelOrder(TreeNode* root) {
-        vector<vector<int>> res;
-        if(!root) return res;
+    vector<int> rightSideView(TreeNode* root) {
+        vector<int> res;
+        if (!root) return res;
 
         queue<TreeNode*> q;
         q.push(root);
 
-        while(!q.empty()){
-            int level = q.size();
-            vector<int> thisLevel;
+        while (!q.empty()) {
+            int levelSize = q.size();
 
-            for(int i=0; i<level; i++){
-                TreeNode* current = q.front(); q.pop();
-                thisLevel.push_back(current->val);
-                if(current->left) q.push(current->left);
-                if(current->right) q.push(current->right);
+            for (int i = 0; i < levelSize; ++i) {
+                TreeNode* node = q.front(); q.pop();
+                
+                if (i == levelSize - 1) {
+                    res.push_back(node->val);
+                }
+
+                if (node->left) q.push(node->left);
+                if (node->right) q.push(node->right);
             }
-            res.push_back(thisLevel);   
         }
+
         return res;
     }
 };
