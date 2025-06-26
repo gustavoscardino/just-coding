@@ -1,9 +1,9 @@
 #include <algorithm>  
 #include <queue>
 #include <iostream>
-#include <queue>
-
+#include <stack>
 using namespace std;
+
 /**
  * Definition for a binary tree node.
  */ 
@@ -29,28 +29,30 @@ struct TreeNode {
  */
 class Solution {
 public:
-    vector<int> rightSideView(TreeNode* root) {
-        vector<int> res;
-        if (!root) return res;
+    vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
+        vector<vector<int>> res;
+        if(!root) return res;
 
         queue<TreeNode*> q;
         q.push(root);
+        bool inOrder = false;
 
-        while (!q.empty()) {
-            int levelSize = q.size();
+        while(!q.empty()){
+            int level = q.size();
+            TreeNode* current;
 
-            for (int i = 0; i < levelSize; ++i) {
-                TreeNode* node = q.front(); q.pop();
-                
-                if (i == levelSize - 1) {
-                    res.push_back(node->val);
-                }
-
-                if (node->left) q.push(node->left);
-                if (node->right) q.push(node->right);
+            vector<int> thisLevel;
+            for(int i=0; i<level; i++){
+                current = q.front(); q.pop();
+                thisLevel.push_back(current->val);
+                if(current->left) q.push(current->left);
+                if(current->right) q.push(current->right);
             }
+            if(inOrder)
+                reverse(thisLevel.begin(), thisLevel.end());
+            inOrder = !inOrder;
+            res.push_back(thisLevel);
         }
-
         return res;
     }
 };
