@@ -1,3 +1,4 @@
+
 #include <algorithm>  
 #include <queue>
 #include <iostream>
@@ -30,27 +31,22 @@ struct TreeNode {
  */
 class Solution {
 public:
-    int getMinimumDifference(TreeNode* root) {
-        int minDiff = INT_MAX;
-        TreeNode* prev = nullptr;
-        inorder(root, prev, minDiff);
-        return minDiff;
-    }
+    bool isValidBST(TreeNode* root) {
+        bool isValid = true;
+        TreeNode* prev = NULL;
+        checkValidBST(root, prev, isValid);
+        return isValid;
+    }   
 
-    void inorder(TreeNode* node, TreeNode*& prev, int& minDiff) {
-        if (!node) return;
-        
-        inorder(node->left, prev, minDiff);
-
-        if (prev != nullptr) {
-            minDiff = min(minDiff, abs(node->val - prev->val));
-        }
+    void checkValidBST(TreeNode* node,TreeNode*& prev, bool& isValid ){
+        if(!node) return;
+        checkValidBST(node->left, prev, isValid);
+        if(prev && prev->val >= node->val)
+            isValid = false;
         prev = node;
-
-        inorder(node->right, prev, minDiff);
+        checkValidBST(node->right, prev, isValid);
     }
 };
-
 
 int main() {
     return 0;
